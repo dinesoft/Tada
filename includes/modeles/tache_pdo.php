@@ -24,6 +24,10 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
       array_push($where, "id=?");
       array_push($parametres, $conditions["id"]);
     }
+      if (isset($conditions['texte'])) {
+      array_push($where, "texte=?");
+      array_push($parametres, $conditions["texte"]);
+    }
     if (count($where) > 0) {
       $requete .= "WHERE ".implode(" AND ", $where);
     }
@@ -86,3 +90,4 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     return $valeurs["id"];
   }
 }
+
