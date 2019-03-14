@@ -15,6 +15,6 @@ class Tache extends \Modele\Item {
   }
 
   public function getValeurs() : array {
-    return array("id" => $this->id, "termine" => $this->termine, "texte" => $this->texte);
+    return array("id" => $this->id, "termine" => $this->termine, "texte" => $this->texte, "dateDebut" => $this->dateDebut);
   }
 }

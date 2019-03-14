@@ -24,10 +24,6 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
       array_push($where, "id=?");
       array_push($parametres, $conditions["id"]);
     }
-      if (isset($conditions['texte'])) {
-      array_push($where, "texte=?");
-      array_push($parametres, $conditions["texte"]);
-    }
     if (count($where) > 0) {
       $requete .= "WHERE ".implode(" AND ", $where);
     }
@@ -41,8 +37,8 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     $champs = array();
     $sqlval = array();
     $parametres = array();
-    $sqlDefaut = array();
-    foreach(array("texte", "termine") as $champ) {
+    $sqlDefaut = array("dateDebut" => "NOW()");
+    foreach(array("texte", "termine", "dateDebut") as $champ) {
       if (isset($valeurs[$champ])) {
         array_push($champs,$champ);
         array_push($sqlval, "?");
@@ -78,6 +74,11 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     $stmt = $this->bdd->prepare("DELETE FROM taches WHERE id=:id;");
     $stmt->execute(array("id" => $id));
   }
+    
+  function effacer_termine($id) {
+    $stmt = $this->bdd->prepare("DELETE FROM taches WHERE id=:id AND termine = 1;");
+    $stmt->execute(array("id" => $id));
+  }
 
   function trouver($id) {
     $stmt = $this->bdd->prepare("SELECT * FROM taches WHERE id=:id LIMIT 1;");
@@ -90,4 +91,3 @@ class TachePDO implements \Modele\CollectionInterface, \Modele\ItemInterface {
     return $valeurs["id"];
   }
 }
-

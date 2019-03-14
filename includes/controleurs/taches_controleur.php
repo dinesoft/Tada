@@ -17,6 +17,13 @@ class TachesControleur {
         }
         header("Location: index.php?controlleur=taches&action=lister");
         exit;
+      case 'effacer_termine':
+        $tache = $this->taches->trouver($parametres["id"]);
+        if ($tache) {
+          $tache->effacer_termine();
+        }
+        header("Location: index.php?controlleur=taches&action=lister");
+        exit;
       case 'modifier':
         $tache = $this->taches->trouver($parametres["id"]);
         if ($tache) {
@@ -44,11 +51,7 @@ class TachesControleur {
         exit;
       case 'lister':
       default:
-            $conditions = array();
-            if (isset($parametres['texte'])){
-                $conditions['texte'] = $parametres['texte'];
-            }
-        $taches = $this->taches->selectionner($conditions);
+        $taches = $this->taches->selectionner();
         require "gabarits/taches/index.php";
         exit;
     }
