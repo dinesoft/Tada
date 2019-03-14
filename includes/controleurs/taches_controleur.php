@@ -44,7 +44,11 @@ class TachesControleur {
         exit;
       case 'lister':
       default:
-        $taches = $this->taches->selectionner();
+            $conditions = array();
+            if (isset($parametres['texte'])){
+                $conditions['texte'] = $parametres['texte'];
+            }
+        $taches = $this->taches->selectionner($conditions);
         require "gabarits/taches/index.php";
         exit;
     }
